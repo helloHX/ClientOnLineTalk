@@ -3,7 +3,6 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,20 +10,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import component.ChartTitle;
-import component.HistoryMassagePanel;
+import component.HistoryMessagePanel;
 import component.MyButton;
-import entity.Message;
 import entity.User;
 
 public class ChartPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	private User friend;
 	private User fromUser;
 //	private ArrayList<Message> messages = new ArrayList<Message>();
 	private JTextPane inputPane;
-	private Font font = new Font("ÀŒÃÂ", Font.BOLD, 18);
-	private MyButton sentButton = new MyButton("∑¢ÀÕ",new Color(85, 187, 255),font);
+	private Font font = new Font("ÂÆã‰Ωì", Font.BOLD, 18);
+	private MyButton sentButton = new MyButton("ÂèëÈÄÅ",new Color(85, 187, 255),font);
 	private ChartTitle charTitle;
-	private HistoryMassagePanel historyMassagePanel;
+	public static HistoryMessagePanel historyMassagePanel;
 	private JScrollPane HMScrollPane;
 	public ChartPanel(){
 		
@@ -34,13 +34,14 @@ public class ChartPanel extends JPanel {
 		this.setLayout(null);
 		this.friend = friend;
 		this.fromUser = fromUser;
+		this.setPreferredSize(new Dimension(800,800));
 		initialize();
 	}
 	
 	public void initialize(){
 		charTitle = new ChartTitle(friend);
-		HistoryMassagePanel historyMassagePanel =
-				new HistoryMassagePanel(fromUser,friend);
+		historyMassagePanel =
+				new HistoryMessagePanel(fromUser,friend);
 		HMScrollPane = new JScrollPane(historyMassagePanel);
 		charTitle.setBounds(0, 0,800, 100);
 		inputPane = new JTextPane();
@@ -56,14 +57,14 @@ public class ChartPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		User user = new User();
-		user.setUserName("’≈»˝");
+		user.setUserName("Âº†‰∏â");
 		user.setUserID("123");
 		User friend = new User();
-		friend.setUserName("¿ÓÀƒ");
+		friend.setUserName("ÊùéÂõõ");
 		friend.setUserID("234");
 		ChartPanel loginPanel = new ChartPanel(user,friend);
 		frame.add(loginPanel);
-		frame.setSize(800, 800);
+		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

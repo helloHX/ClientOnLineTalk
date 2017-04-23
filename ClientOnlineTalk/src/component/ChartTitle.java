@@ -17,10 +17,10 @@ public class ChartTitle extends JPanel {
 	private String filepath;
 	private User friend;
 	private Color buttonColor =new Color(58, 173, 214);
-	private Font font = new Font("宋体", Font.BOLD, 18);
-	private Font infoFont = new Font("宋体", Font.BOLD, 60);
-	private MyButton selectFile = new MyButton("选择文件", buttonColor, font);
-	private MyButton selectPicture = new MyButton("选择图片", buttonColor, font);
+	private Font font = new Font("瀹嬩綋", Font.BOLD, 18);
+	private Font infoFont = new Font("瀹嬩綋", Font.BOLD, 60);
+	private MyButton selectFile = new MyButton("閫夋嫨鏂囦欢", buttonColor, font);
+	private MyButton selectPicture = new MyButton("閫夋嫨鍥剧墖", buttonColor, font);
 	private JLabel friendinfo = new JLabel();
 
 	public ChartTitle() {
@@ -47,7 +47,7 @@ public class ChartTitle extends JPanel {
 //	public static void main(String[] args) {
 //		JFrame frame = new JFrame();
 //		User user = new User();
-//		user.setUserName("张三");
+//		user.setUserName("寮犱笁");
 //		ChartTitle loginPanel = new ChartTitle(user);
 //		frame.add(loginPanel);
 //		frame.setResizable(false);

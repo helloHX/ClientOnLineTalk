@@ -1,28 +1,30 @@
 package entity;
 
+
 public class Message {
-	private String massageId;
-	private String massage;
-	private String massageTime;
+	private String messageId;
+	private String message;
+	private String messageTime;
 	private String formId;
 	private String ToId;
-	public String getMassageId() {
-		return massageId;
+	
+	public String getMessageId() {
+		return messageId;
 	}
-	public void setMassageId(String massageId) {
-		this.massageId = massageId;
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
 	}
-	public String getMassage() {
-		return massage;
+	public String getMessage() {
+		return message;
 	}
-	public void setMassage(String massage) {
-		this.massage = massage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	public String getMassageTime() {
-		return massageTime;
+	public String getMessageTime() {
+		return messageTime;
 	}
-	public void setMassageTime(String massageTime) {
-		this.massageTime = massageTime;
+	public void setMessageTime(String messageTime) {
+		this.messageTime = messageTime;
 	}
 	public String getFormId() {
 		return formId;

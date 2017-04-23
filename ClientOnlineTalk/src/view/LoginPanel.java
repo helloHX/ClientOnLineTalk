@@ -22,13 +22,15 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import component.MyButton;
+import connect.ClientHandler;
+import entity.User;
 
 public class LoginPanel extends JPanel implements ActionListener, MouseListener {
 	private JTextField idField = new JTextField();
 	private JPasswordField pwdField = new JPasswordField();
-	private MyButton loginButton = new MyButton("µÇÂ½", new Color(224, 102, 255),
+	private MyButton loginButton = new MyButton("ç™»é™†", new Color(224, 102, 255),
 			new Font("Courier", Font.BOLD, 18));
-	private JLabel registelabel = new JLabel("×¢²á");
+	private JLabel registelabel = new JLabel("æ³¨å†Œ");
 	private JPanel formPanel = new JPanel();
 	private ImageIcon ImageIcon = new ImageIcon("image/bgLogin.png");
 	private Image image = ImageIcon.getImage();
@@ -36,8 +38,8 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 			102, 255));
 
 	public LoginPanel() {
+		this.setPreferredSize(new Dimension(400,600));
 		initialize();
-
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -56,7 +58,7 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 		pwdField.setBounds(80, 80, 240, 40);
 		loginButton.setBounds(100, 180, 200, 40);
 		registelabel.setPreferredSize(new Dimension(100, 60));
-		registelabel.setFont(new Font("ËÎÌå", Font.BOLD, 18));
+		registelabel.setFont(new Font("å®‹ä½“", Font.BOLD, 18));
 		registelabel.setForeground(Color.BLUE);
 		registelabel.setBounds(180, 230, 100, 60);
 		
@@ -72,29 +74,25 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 		registelabel.addMouseListener(this);
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		LoginPanel loginPanel = new LoginPanel();
-		frame.add(loginPanel);
-		frame.setSize(400, 600);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("OnlineTalk");
-		frame.setVisible(true);
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == loginButton) {
-
+			String id = idField.getText();
+			String password = pwdField.getText();
+			ClientHandler.createLogin(id, password);
+//			User user = new User();
+//			user.setUserName("çŽ‹äº”");
+//			user.setUserID("123");
+//			user.setUserStatus(true);
+//			ClientHandler.onLine(user);
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
-			// Ìø×ª
+			// è·³è½¬
 		}
 	}
 

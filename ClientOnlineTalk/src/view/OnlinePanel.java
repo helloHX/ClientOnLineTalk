@@ -4,58 +4,56 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import component.FriendPanel;
+import entity.User;
 
 public class OnlinePanel extends JPanel {
-	private JLabel userNameLabel = new JLabel("Ä³Ä³");
-	private JComboBox statusBox=new JComboBox();  
-	private FriendPanel friedPanel = new FriendPanel();
-	private JScrollPane friendSroll = new JScrollPane(friedPanel);
 
-	public OnlinePanel(){
+	private static final long serialVersionUID = 2905458428510260853L;
+	private JLabel userNameLabel = new JLabel();
+	private JComboBox<String> statusBox = new JComboBox<String>();
+	public static FriendPanel friedPanel = new FriendPanel();
+	private JScrollPane friendSroll = new JScrollPane(friedPanel);
+	private JButton addFriendButton = new JButton("æ·»åŠ ");
+	private User user;
+
+	public OnlinePanel(User user) {
+		this.setPreferredSize(new Dimension(400, 800));
+		this.user = user;
 		this.setLayout(null);
-		statusBox=new JComboBox();  
-		statusBox.addItem("ÔÚÏß");  
-		statusBox.addItem("ÀëÏß");  
+		statusBox.addItem("åœ¨çº¿");
+		statusBox.addItem("ç¦»çº¿");
 		initialize();
 	}
-	
 
-	public void initialize(){
-		friendSroll.setPreferredSize(new Dimension(400,720));
-		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT,20,20));
-		userNameLabel.setFont(new Font("ËÎÌå", Font.BOLD, 50));
-		titlePanel.add(userNameLabel,BorderLayout.WEST);
-		titlePanel.add(statusBox,BorderLayout.EAST);
+	public void initialize() {
+		userNameLabel.setText(user.getUserName());
+		if (user.isUserStatus()) {
+			statusBox.setSelectedIndex(0);
+		} else {
+			statusBox.setSelectedIndex(1);
+		}
+		friendSroll.setPreferredSize(new Dimension(400, 650));
+		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+		JPanel bottomPanel = new JPanel(
+				new FlowLayout(FlowLayout.RIGHT, 20, 15));
+		bottomPanel.add(addFriendButton);
+		userNameLabel.setFont(new Font("å®‹ä½“", Font.BOLD, 50));
+		titlePanel.add(userNameLabel, BorderLayout.WEST);
+		titlePanel.add(statusBox, BorderLayout.EAST);
 		titlePanel.setBounds(0, 0, 400, 80);
-		friendSroll.setBounds(0, 80, 400, 720);
+		friendSroll.setBounds(0, 80, 400, 650);
+		bottomPanel.setBounds(0, 720, 400, 80);
 		this.add(titlePanel);
 		this.add(friendSroll);
-	}
-	
-	
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		OnlinePanel loginPanel = new OnlinePanel();
-		frame.add(loginPanel);
-		frame.setSize(400, 800);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("OnlineTalk");
-		frame.setVisible(true);
+		this.add(bottomPanel);
 	}
 }

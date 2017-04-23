@@ -16,6 +16,7 @@ import entity.User;
 public class FriendPanel extends JPanel {
 	private ArrayList<User> userList = new ArrayList<>();
 	private SingleFriendLable[] singleFriendLables;
+	private User user;
 	private User slectedFriend;
 	private int choicedIndex;
 
@@ -23,7 +24,7 @@ public class FriendPanel extends JPanel {
 		this.setLayout(null);
 		initializeFriends();
 		showFriends();
-		this.setPreferredSize(new Dimension(400, 720));
+		this.setPreferredSize(new Dimension(400, 650));
 	}
 
 	public int getChoicedIndex() {
@@ -34,43 +35,54 @@ public class FriendPanel extends JPanel {
 		this.choicedIndex = choicedIndex;
 	}
 
-	public void initializeFriends(){
-		User user = new User();
-		user.setUserName("ÕÅÈı");
-		user.setUserID("123");
-		user.setUserStatus(true);
-		userList.add(user);
-		User friend = new User();
-		friend.setUserName("ÀîËÄ");
-		friend.setUserID("234");
-		friend.setUserStatus(true);
-		userList.add(friend);
-		User friend2 = new User();
-		friend2.setUserName("ÀîËÄ");
-		friend2.setUserID("567");
-		friend2.setUserStatus(true);
-		userList.add(friend2);
-		User friend3 = new User();
-		friend3.setUserName("ÀîËÄ");
-		friend3.setUserID("789");
-		friend3.setUserStatus(true);
-		userList.add(friend3);
-		User friend4 = new User();
-		friend4.setUserName("ÀîËÄ");
-		friend4.setUserID("147");
-		friend4.setUserStatus(false);
-		userList.add(friend4);
+	public User getUser() {
+		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+		initializeFriends();
+	}
+	public void initializeFriends(){
+		
+	}
+//	public void initializeFriends(){
+//		User user = new User();
+//		user.setUserName("å¼ ä¸‰");
+//		user.setUserID("123");
+//		user.setUserStatus(true);
+//		userList.add(user);
+//		User friend = new User();
+//		friend.setUserName("æå››");
+//		friend.setUserID("234");
+//		friend.setUserStatus(true);
+//		userList.add(friend);
+//		User friend2 = new User();
+//		friend2.setUserName("æå››");
+//		friend2.setUserID("567");
+//		friend2.setUserStatus(true);
+//		userList.add(friend2);
+//		User friend3 = new User();
+//		friend3.setUserName("æå››");
+//		friend3.setUserID("789");
+//		friend3.setUserStatus(true);
+//		userList.add(friend3);
+//		User friend4 = new User();
+//		friend4.setUserName("æå››");
+//		friend4.setUserID("147");
+//		friend4.setUserStatus(false);
+//		userList.add(friend4);
+//	}
 	
 	public void showFriends() {
 		this.setPreferredSize(new Dimension(400, userList.size() * 90));
-		this.removeAll();// ÒÆ³öÒÑÓĞ×´Ì¬
+		this.removeAll();// ç§»å‡ºå·²æœ‰çŠ¶æ€
 		LabelListener monitor = new LabelListener();
 		singleFriendLables = new SingleFriendLable[userList.size()];
 		for (int i = 0; i < userList.size(); i++) {
 			singleFriendLables[i] = new SingleFriendLable(userList.get(i)
 					.getUserName(), userList.get(i).isUserStatus());
-			singleFriendLables[i].setBounds(0, i * 60 + 10, 400, 60);// Éè¶¨¸÷¸öÕ¹Ê¾ÄÚÈİµÄÎ»ÖÃ
+			singleFriendLables[i].setBounds(0, i * 60 + 10, 400, 60);// è®¾å®šå„ä¸ªå±•ç¤ºå†…å®¹çš„ä½ç½®
 			singleFriendLables[i].addMouseListener(monitor);
 			this.add(singleFriendLables[i]);
 		}
@@ -83,13 +95,13 @@ public class FriendPanel extends JPanel {
 			for (int i = 0; i < userList.size(); i++) {
 				if (e.getSource() == singleFriendLables[i]) {
 					slectedFriend = userList.get(i);
-					choicedIndex = i;// ±£´æÑ¡ÖĞµÄ±êÇ©
-					//´¦Àí±»Ñ¡ÖĞºóµÄÊÂ¼ş
+					choicedIndex = i;// ä¿å­˜é€‰ä¸­çš„æ ‡ç­¾
+					//å¤„ç†è¢«é€‰ä¸­åçš„äº‹ä»¶
 				}
 			}
 		}
 
-		public void mouseEntered(MouseEvent e) {// ´´½¨Êó±êÒÆ³öµÄĞ§¹û
+		public void mouseEntered(MouseEvent e) {// åˆ›å»ºé¼ æ ‡ç§»å‡ºçš„æ•ˆæœ
 			for (int i = 0; i < userList.size(); i++) {
 				if (e.getSource() == singleFriendLables[i]) {
 					singleFriendLables[i].setBackground(new Color(229, 243, 251));

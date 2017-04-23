@@ -14,8 +14,8 @@ import view.LoginPanel;
 public class SingleFriendLable extends JLabel {
 	private JLabel friendName = new JLabel();
 	private JLabel status = new JLabel();
-	private Font nameFont = new Font("宋体", Font.BOLD, 24);
-	private Font statuFont = new Font("宋体", Font.BOLD, 15);
+	private Font nameFont = new Font("瀹嬩綋", Font.BOLD, 24);
+	private Font statuFont = new Font("瀹嬩綋", Font.BOLD, 15);
 	public SingleFriendLable(){
 		
 	}
@@ -24,15 +24,15 @@ public class SingleFriendLable extends JLabel {
 		initialize();
 		this.friendName.setText(friendName);
 		if (status) {
-			this.status.setText("在线");
+			this.status.setText("鍦ㄧ嚎");
 		}else{
-			this.status.setText("离线");
+			this.status.setText("绂荤嚎");
 		}
 	}
 	
 //	public static void main(String[] args) {
 //		JFrame frame = new JFrame();
-//		SingleFriendLable loginPanel = new SingleFriendLable("某某",true);
+//		SingleFriendLable loginPanel = new SingleFriendLable("鏌愭煇",true);
 //		frame.add(loginPanel);
 //		frame.setSize(400, 600);
 //		frame.setResizable(false);
