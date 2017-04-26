@@ -6,24 +6,24 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import connect.ClientHandler;
+import app.ClientOnlineTalk;
 import entity.User;
 
 public class FriendPanel extends JPanel {
-	private ArrayList<User> userList = new ArrayList<>();
+	private List<User> userList = new ArrayList<>();
 	private SingleFriendLable[] singleFriendLables;
-	private User user;
 	private User slectedFriend;
 	private int choicedIndex;
 
 	public FriendPanel() {
 		this.setLayout(null);
-		initializeFriends();
-		showFriends();
 		this.setPreferredSize(new Dimension(400, 650));
 	}
 
@@ -35,44 +35,12 @@ public class FriendPanel extends JPanel {
 		this.choicedIndex = choicedIndex;
 	}
 
-	public User getUser() {
-		return user;
+	public void initializeFriends(List<User> userList){
+		this.userList = userList;
+		showFriends();
+		this.repaint();
+		this.doLayout();
 	}
-
-	public void setUser(User user) {
-		this.user = user;
-		initializeFriends();
-	}
-	public void initializeFriends(){
-		
-	}
-//	public void initializeFriends(){
-//		User user = new User();
-//		user.setUserName("张三");
-//		user.setUserID("123");
-//		user.setUserStatus(true);
-//		userList.add(user);
-//		User friend = new User();
-//		friend.setUserName("李四");
-//		friend.setUserID("234");
-//		friend.setUserStatus(true);
-//		userList.add(friend);
-//		User friend2 = new User();
-//		friend2.setUserName("李四");
-//		friend2.setUserID("567");
-//		friend2.setUserStatus(true);
-//		userList.add(friend2);
-//		User friend3 = new User();
-//		friend3.setUserName("李四");
-//		friend3.setUserID("789");
-//		friend3.setUserStatus(true);
-//		userList.add(friend3);
-//		User friend4 = new User();
-//		friend4.setUserName("李四");
-//		friend4.setUserID("147");
-//		friend4.setUserStatus(false);
-//		userList.add(friend4);
-//	}
 	
 	public void showFriends() {
 		this.setPreferredSize(new Dimension(400, userList.size() * 90));
@@ -97,6 +65,7 @@ public class FriendPanel extends JPanel {
 					slectedFriend = userList.get(i);
 					choicedIndex = i;// 保存选中的标签
 					//处理被选中后的事件
+					ClientOnlineTalk.chart(slectedFriend);
 				}
 			}
 		}

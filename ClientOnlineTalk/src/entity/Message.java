@@ -1,7 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 
-public class Message {
+
+public class Message implements Serializable{
+	private static final long serialVersionUID = -1123272202727160743L;
 	private String messageId;
 	private String message;
 	private String messageTime;

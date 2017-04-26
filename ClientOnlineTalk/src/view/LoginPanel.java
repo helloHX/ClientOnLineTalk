@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import util.Util;
 import component.MyButton;
 import connect.ClientHandler;
 import entity.User;
@@ -38,7 +39,7 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 			102, 255));
 
 	public LoginPanel() {
-		this.setPreferredSize(new Dimension(400,600));
+		this.setPreferredSize(new Dimension(400, 600));
 		initialize();
 	}
 
@@ -61,7 +62,7 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 		registelabel.setFont(new Font("宋体", Font.BOLD, 18));
 		registelabel.setForeground(Color.BLUE);
 		registelabel.setBounds(180, 230, 100, 60);
-		
+
 		formPanel.add(idField);
 		formPanel.add(pwdField);
 		formPanel.add(registelabel);
@@ -74,25 +75,20 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 		registelabel.addMouseListener(this);
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == loginButton) {
 			String id = idField.getText();
 			String password = pwdField.getText();
-			ClientHandler.createLogin(id, password);
-//			User user = new User();
-//			user.setUserName("王五");
-//			user.setUserID("123");
-//			user.setUserStatus(true);
-//			ClientHandler.onLine(user);
+			Thread connect = new Thread(new ClientHandler(id, password));
+			connect.start();
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
-			// 跳转
+			Util.openBrowse();
 		}
 	}
 

@@ -1,11 +1,19 @@
 package entity;
 
+import java.io.PrintWriter;
+
 public class User {
 	private String userID;
 	private String password;
 	private String userName;
 	private boolean userStatus;
-	
+	public PrintWriter getWriter() {
+		return writer;
+	}
+	public void setWriter(PrintWriter writer) {
+		this.writer = writer;
+	}
+	private PrintWriter writer;
 	public String getUserID() {
 		return userID;
 	}

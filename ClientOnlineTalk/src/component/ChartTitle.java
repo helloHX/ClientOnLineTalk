@@ -43,17 +43,4 @@ public class ChartTitle extends JPanel {
 		this.add(selectPicture);
 		
 	}
-
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		User user = new User();
-//		user.setUserName("张三");
-//		ChartTitle loginPanel = new ChartTitle(user);
-//		frame.add(loginPanel);
-//		frame.setResizable(false);
-//		frame.setLocationRelativeTo(null);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setTitle("OnlineTalk");
-//		frame.setVisible(true);
-//	}
 }
