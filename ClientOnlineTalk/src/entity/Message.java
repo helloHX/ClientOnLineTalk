@@ -7,10 +7,21 @@ public class Message implements Serializable{
 	private static final long serialVersionUID = -1123272202727160743L;
 	private String messageId;
 	private String message;
+	private String messageType;
 	private String messageTime;
 	private String formId;
 	private String ToId;
 	
+	
+	public String getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public String getMessageId() {
 		return messageId;
 	}

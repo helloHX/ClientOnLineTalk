@@ -19,6 +19,7 @@ public class ClientOnlineTalk {
 	public static OnlinePanel onlinePanel;
 	public static JFrame frame = new JFrame();
 	public static JFrame onLineframe = new JFrame();
+	public static AddFriendPanel addFriendPanel = new AddFriendPanel();
 	public static Map<String, JFrame> chartFrameMap = new HashMap<>();
 
 	public static void main(String[] args) {
@@ -73,7 +74,7 @@ public class ClientOnlineTalk {
 
 	public static void addFriend() {
 		JFrame addframe = new JFrame();
-		addframe.add(new AddFriendPanel());
+		addframe.add(addFriendPanel);
 		addframe.pack();
 		addframe.setResizable(false);
 		addframe.setLocationRelativeTo(null);

@@ -80,10 +80,12 @@ public class ChartFrame extends JFrame implements ActionListener {
 		Message mes = new Message();
 		mes.setFormId(ClientHandler.user.getUserID());
 		mes.setToId(friend.getUserID());
+		mes.setMessageType("MESSAGE");
 		mes.setMessage(inputPane.getText().trim());
 		mes.setMessageTime((new Date()).toLocaleString());
 		historyMassagePanel.PreAddMessage(mes);
 		ClientHandler.createMassage(mes, friend.getUserID());
+		inputPane.setText("");
 		// 发送消息
 	}
 

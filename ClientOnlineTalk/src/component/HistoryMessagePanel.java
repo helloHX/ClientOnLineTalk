@@ -2,15 +2,19 @@ package component;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-
 import util.FileUtil;
 import connect.ClientHandler;
 import entity.Message;
@@ -58,6 +62,18 @@ public class HistoryMessagePanel extends JTextPane {
 		this.toUser = toUser;
 	}
 	
+	 public void insertIcon(File file) {
+		  this.setCaretPosition(doc.getLength()); // 设置插入位置
+		  ImageIcon img = new ImageIcon(file.getPath());
+		  this.insertComponent(new ImagePanel(img));
+		  try {
+			doc.insertString(doc.getLength(), "\n",
+						getAttribute(0));
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
+	  
 	public void insertMessage(String message, int type) {//向页面展示一条消息
 		try {
 			doc.insertString(doc.getLength(), message + "\n",
@@ -86,8 +102,13 @@ public class HistoryMessagePanel extends JTextPane {
 	public void initializeMessage() {//初始化消息记录
 		Message currentMessage = null;
 		for (int i = 0; i < messages.size(); i++) {
+			
 			currentMessage = messages.get(i);
 			PreAddMessage(currentMessage);
+			System.out.println("initializeMessage" + currentMessage.getMessageType());
+			if(currentMessage.getMessageType().equals("IMG")){
+				this.insertIcon(new File(currentMessage.getMessage()));
+			}
 		}
 		this.repaint();
 		this.doLayout();

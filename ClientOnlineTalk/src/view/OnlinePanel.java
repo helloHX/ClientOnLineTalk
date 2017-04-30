@@ -55,6 +55,7 @@ public class OnlinePanel extends JPanel implements ActionListener {
 		titlePanel.setBounds(0, 0, 400, 80);
 		friendSroll.setBounds(0, 80, 400, 650);
 		bottomPanel.setBounds(0, 720, 400, 80);
+		addFriendButton.addActionListener(this);
 		this.add(titlePanel);
 		this.add(friendSroll);
 		this.add(bottomPanel);
