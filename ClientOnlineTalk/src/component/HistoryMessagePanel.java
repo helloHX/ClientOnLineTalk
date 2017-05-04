@@ -33,7 +33,7 @@ public class HistoryMessagePanel extends JTextPane {
 
 	public HistoryMessagePanel() {
 	}
-
+	
 	public HistoryMessagePanel(User toUser) {
 		this.toUser = toUser;
 		setEditable(false);
@@ -64,8 +64,7 @@ public class HistoryMessagePanel extends JTextPane {
 	
 	 public void insertIcon(File file) {
 		  this.setCaretPosition(doc.getLength()); // 设置插入位置
-		  ImageIcon img = new ImageIcon(file.getPath());
-		  this.insertComponent(new ImagePanel(img));
+		  this.insertComponent(new ImagePanel(file.getPath()));
 		  try {
 			doc.insertString(doc.getLength(), "\n",
 						getAttribute(0));
@@ -73,6 +72,17 @@ public class HistoryMessagePanel extends JTextPane {
 			e.printStackTrace();
 		}
 	}
+	 
+	 public void insertFilePanel(File file){
+		 this.setCaretPosition(doc.getLength()); // 设置插入位置
+		  this.insertComponent(new FilePanel(file));
+		  try {
+			doc.insertString(doc.getLength(), "\n",
+						getAttribute(0));
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	 }
 	  
 	public void insertMessage(String message, int type) {//向页面展示一条消息
 		try {
@@ -108,6 +118,9 @@ public class HistoryMessagePanel extends JTextPane {
 			System.out.println("initializeMessage" + currentMessage.getMessageType());
 			if(currentMessage.getMessageType().equals("IMG")){
 				this.insertIcon(new File(currentMessage.getMessage()));
+			}
+			if(currentMessage.getMessageType().equals("FILE")){
+				this.insertFilePanel(new File(currentMessage.getMessage()));
 			}
 		}
 		this.repaint();

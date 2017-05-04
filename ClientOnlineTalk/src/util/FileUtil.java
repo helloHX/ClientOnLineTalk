@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
+import connect.ClientReciver;
 import entity.Message;
 import entity.User;
 
@@ -27,7 +28,7 @@ public class FileUtil {
 	}
 	
 	private static synchronized void saveAllMessage(Message mes,String dir,String fileName){
-		String path = "D:\\测试垃圾\\onlineChart\\" + dir
+		String path = ClientReciver.filePath + dir
 				+ "\\chart" + "\\" + fileName + ".dat";
 		File file = new File(path);
 		try {
@@ -57,7 +58,7 @@ public class FileUtil {
 	}
 
 	public static synchronized List<Message> readMessage(String toId,String fromId) {
-		String path = "D:\\测试垃圾\\onlineChart\\" +toId.trim()+ "\\chart"
+		String path = ClientReciver.filePath +toId.trim()+ "\\chart"
 				+ "\\" + fromId.trim() + ".dat";
 		File file = new File(path);
 		System.out.println("File_readMessage mes:"+ path);
@@ -100,12 +101,11 @@ public class FileUtil {
 	public static synchronized void createFile(File file) {
 		try {
 			if (!file.getParentFile().exists()) {
-				if (file.getParentFile().mkdirs()) {
-					if (file.createNewFile()) {
-						System.out.println("FileUtil_createFile"
-								+ file.getName() + "创建成功");
-					}
-				}
+				file.getParentFile().mkdirs();
+			}
+			if (file.createNewFile()) {
+				System.out.println("FileUtil_createFile"
+						+ file.getName() + "创建成功");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

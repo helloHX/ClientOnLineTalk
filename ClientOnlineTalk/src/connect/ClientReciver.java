@@ -2,11 +2,11 @@ package connect;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -24,7 +24,7 @@ import app.ClientOnlineTalk;
 import entity.Message;
 import entity.User;
 
-public class ClientReciver implements Runnable {
+public class ClientReciver extends Thread {
 	public BufferedReader buffer_reader;
 	private final CountDownLatch endSignal;
 	public static final String filePath = "D:\\测试垃圾\\onlineChart";
@@ -55,7 +55,8 @@ public class ClientReciver implements Runnable {
 		try {
 			boolean online = true;
 			while (online) {
-				online = dispatch(getData(buffer_reader.readLine()));
+				online = dispatch(getData(
+						new String(buffer_reader.readLine().getBytes("UTF-8"))));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +74,16 @@ public class ClientReciver implements Runnable {
 			return downloadfile(root);
 		case "image":
 			return downloadimage(root);
+		case "changeFriendState":
+			return changeStateFriend(root);
 		}
+		return true;
+	}
+
+	private boolean changeStateFriend(Element root) {
+		String friendId = root.getAttribute("friendID");
+		boolean state = Boolean.parseBoolean(root.getAttribute("state"));
+		OnlinePanel.friedPanel.changeFriendState(friendId, state);
 		return true;
 	}
 
@@ -141,7 +151,14 @@ public class ClientReciver implements Runnable {
 			downLoadHandler.start();
 			ClientHandler.preparedFileDownload(fileName);
 			downOverSingal.await();//等待文件下载完成
-			//文件夹展示
+			
+			ChartFrame charFrame = (ChartFrame) ClientOnlineTalk.chartFrameMap
+					.get(message.getFormId());
+			if (charFrame != null) {// 如果聊天窗口已经打开则直接添加在聊天界面上
+				charFrame.historyMassagePanel.PreAddMessage(message);
+				charFrame.historyMassagePanel.insertFilePanel(new File(path));
+				charFrame.setVisible(true);
+			}
 			FileUtil.saveInMessage(message);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -179,8 +196,7 @@ public class ClientReciver implements Runnable {
 			if (state.equals("ok")) {
 				dealLogin(message);
 			} else
-				;
-			// 调用登陆失败方法
+				JOptionPane.showMessageDialog(null,"密码或账号错误","登陆失败", JOptionPane.ERROR_MESSAGE);
 			return true;
 		case "friends":
 			if (state.equals("ok")) {

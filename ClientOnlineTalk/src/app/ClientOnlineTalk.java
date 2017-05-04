@@ -54,7 +54,7 @@ public class ClientOnlineTalk {
 		});
 		onLineframe.setTitle("OnlineTalk");
 		onLineframe.setVisible(true);
-		ClientHandler.requestFriends();
+		
 	}
 
 	public static void chart(User friend) {
@@ -82,4 +82,6 @@ public class ClientOnlineTalk {
 		addframe.setTitle("OnlineTalk");
 		addframe.setVisible(true);
 	}
+
+
 }

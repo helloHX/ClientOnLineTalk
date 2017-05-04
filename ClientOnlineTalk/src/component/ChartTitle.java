@@ -56,28 +56,31 @@ public class ChartTitle extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.filepath = FileUtil.ScanFile();
-		
-		Date currentDate = new Date();
-		String fileSentTime = currentDate.toLocaleString();
-		Message message = new Message();
-		message.setMessage(filepath);
-		message.setMessageTime(fileSentTime);
-		message.setFormId(ClientHandler.user.getUserID());
-		message.setToId(friend.getUserID());
-		
-		ChartFrame charFrame = (ChartFrame) ClientOnlineTalk.chartFrameMap
-				.get(friend.getUserID());
-		charFrame.historyMassagePanel.PreAddMessage(message);
-		if (e.getSource() == selectImage) {
-			message.setMessageType("IMG");
-			charFrame.historyMassagePanel.insertIcon(new File(filepath));
-			charFrame.setVisible(true);
-			ClientHandler.readySentImage(message);
+		if (filepath != null && !filepath.equals("")) {
+			Date currentDate = new Date();
+			String fileSentTime = currentDate.toLocaleString();
+			Message message = new Message();
+			message.setMessage(filepath);
+			message.setMessageTime(fileSentTime);
+			message.setFormId(ClientHandler.user.getUserID());
+			message.setToId(friend.getUserID());
+
+			ChartFrame charFrame = (ChartFrame) ClientOnlineTalk.chartFrameMap
+					.get(friend.getUserID());
+			charFrame.historyMassagePanel.PreAddMessage(message);
+			if (e.getSource() == selectImage) {
+				message.setMessageType("IMG");
+				charFrame.historyMassagePanel.insertIcon(new File(filepath));
+				charFrame.setVisible(true);
+				ClientHandler.readySentImage(message);
+			}
+			if (e.getSource() == selectFile) {
+				message.setMessageType("FILE");
+				charFrame.historyMassagePanel
+						.insertFilePanel(new File(filepath));
+				ClientHandler.readySentFile(message);
+			}
 		}
-		if (e.getSource() == selectFile) {
-			message.setMessageType("FILE");
-			ClientHandler.readySentFile(message);
-		}
-		
+
 	}
 }

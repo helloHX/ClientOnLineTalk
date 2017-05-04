@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -17,12 +18,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import component.FriendPanel;
 import util.FileUtil;
+import view.OnlinePanel;
 import app.ClientOnlineTalk;
 import entity.Message;
 import entity.User;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler extends Thread{
 	public static PrintWriter writer;
 	private String id;
 	private String password;
@@ -45,14 +48,12 @@ public class ClientHandler implements Runnable{
 			InputStreamReader reader = new InputStreamReader(
 					socket.getInputStream());
 			BufferedReader buffer_reader = new BufferedReader(reader);
-			clientReciver = new ClientReciver(buffer_reader,endSingal);
+			clientReciver = new ClientReciver(buffer_reader,endSingal);//创建收处理器
+			clientReciver.start();
 			writer = new PrintWriter(socket.getOutputStream());
-			ExecutorService exec = Executors.newFixedThreadPool(1);
-			exec.submit(clientReciver);
 			createLogin(id,password);//创建连接后登陆
 			endSingal.await();
 			System.out.println("被断开");
-			exec.shutdownNow();
 			socket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,7 +130,17 @@ public class ClientHandler implements Runnable{
 
 	public static void sentMessage(String mes) {
 		System.out.println("sentMessage" + mes);
-		writer.println(mes);
+		try {
+			writer.println(new String(mes.getBytes("UTF-8")));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		writer.flush();
+	}
+
+	public static void deleteFriend() {
+		String deleteInfo = "<deleteFriend userID = '" + user.getUserID() + "' "
+				+ "friendID = '"+FriendPanel.selectedFriend.getUserID()+"'/>";
+		sentMessage(deleteInfo);
 	}
 }

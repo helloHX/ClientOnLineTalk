@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Thu May 04 20:27:38 CST 2017
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=D\:\\\u6D4B\u8BD5\u5783\u573E\\ClientOnlineTalk_fat.jar
+manifest.mergeall=true
+manifest.mainclass=app.ClientOnlineTalk
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=
+includes=

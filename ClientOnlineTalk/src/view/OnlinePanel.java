@@ -27,6 +27,7 @@ public class OnlinePanel extends JPanel implements ActionListener {
 	public static FriendPanel friedPanel = new FriendPanel();
 	private JScrollPane friendSroll = new JScrollPane(friedPanel);
 	private JButton addFriendButton = new JButton("添加");
+	private JButton deleteFriendButton = new JButton("删除");
 	
 
 	public OnlinePanel() {
@@ -49,6 +50,7 @@ public class OnlinePanel extends JPanel implements ActionListener {
 		JPanel bottomPanel = new JPanel(
 				new FlowLayout(FlowLayout.RIGHT, 20, 15));
 		bottomPanel.add(addFriendButton);
+		bottomPanel.add(deleteFriendButton);
 		userNameLabel.setFont(new Font("宋体", Font.BOLD, 50));
 		titlePanel.add(userNameLabel, BorderLayout.WEST);
 		titlePanel.add(statusBox, BorderLayout.EAST);
@@ -56,6 +58,7 @@ public class OnlinePanel extends JPanel implements ActionListener {
 		friendSroll.setBounds(0, 80, 400, 650);
 		bottomPanel.setBounds(0, 720, 400, 80);
 		addFriendButton.addActionListener(this);
+		deleteFriendButton.addActionListener(this);
 		this.add(titlePanel);
 		this.add(friendSroll);
 		this.add(bottomPanel);
@@ -65,6 +68,9 @@ public class OnlinePanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(addFriendButton == e.getSource()){
 			ClientOnlineTalk.addFriend();
+		}
+		if(deleteFriendButton == e.getSource()){
+			ClientHandler.deleteFriend();
 		}
 	}
 }

@@ -1,8 +1,6 @@
 package util;
 import java.io.*;
-/*Ϊ�����ظ����ļ����ļ���׷����ɶ��header
- * Ϊ�Բ���ʱ���ļ��Ķ�ȡ����IOExption
- * ��дObjectOutputstream*/
+
 public class MyObjectOutputStream extends ObjectOutputStream{
 	
 	public MyObjectOutputStream() throws IOException {  
