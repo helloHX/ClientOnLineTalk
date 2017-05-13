@@ -25,10 +25,11 @@ import entity.Message;
 import entity.User;
 
 public class ChartFrame extends JFrame implements ActionListener {
-
+	public static final int CFWIDTH = 800;
+	public static final int CFHIGHT = 800;
+	
 	private static final long serialVersionUID = 1L;
 	private User friend;
-	// private ArrayList<Message> messages = new ArrayList<Message>();
 	private JTextPane inputPane;
 	private Font font = new Font("宋体", Font.BOLD, 18);
 	private MyButton sentButton = new MyButton("发送", new Color(85, 187, 255),
@@ -58,15 +59,15 @@ public class ChartFrame extends JFrame implements ActionListener {
 	public void initialize() {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(null);
-		contentPanel.setPreferredSize(new Dimension(800,800));
+		contentPanel.setPreferredSize(new Dimension(CFWIDTH,CFHIGHT));
 		charTitle = new ChartTitle(friend);
 		historyMassagePanel = new HistoryMessagePanel(friend);
 		HMScrollPane = new JScrollPane(historyMassagePanel);
-		charTitle.setBounds(0, 0, 800, 100);
+		charTitle.setBounds(0, 0, CFWIDTH, CFHIGHT /8);
 		inputPane = new JTextPane();
-		HMScrollPane.setBounds(0, 110, 800, 330);
-		inputPane.setBounds(0, 450, 800, 220);
-		sentButton.setBounds(300, 710, 200, 40);
+		HMScrollPane.setBounds(0, CFHIGHT /8, CFWIDTH, CFHIGHT * 4/8);
+		inputPane.setBounds(0, CFWIDTH * 5/8 + 10, CFWIDTH, CFHIGHT * 2/8);
+		sentButton.setBounds(CFWIDTH * 3/8, CFWIDTH * 7/8 + 20, CFWIDTH / 4, CFHIGHT / 20);
 		sentButton.addActionListener(this);
 		contentPanel.add(charTitle);
 		contentPanel.add(HMScrollPane);

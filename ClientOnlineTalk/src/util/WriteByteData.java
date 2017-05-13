@@ -31,7 +31,6 @@ public class WriteByteData {
 	
 	public synchronized void SaveData(byte[] data,int off,int dataLength){
 		try {
-			System.out.println("Server_SaveData" + dataLength);
 			outPut.write(data, off, dataLength);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,23 +1,23 @@
 package component;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Label;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import view.OnlinePanel;
 
-import view.LoginPanel;
 
 public class SingleFriendLable extends JLabel {
+
+	private static final long serialVersionUID = -1294092833930902653L;
+	private int num;
 	private JLabel friendName = new JLabel();
 	private JLabel status = new JLabel();
-	private Font nameFont = new Font("宋体", Font.BOLD, 24);
-	private Font statuFont = new Font("宋体", Font.BOLD, 15);
-
+	private Font nameFont = new Font("宋体", Font.BOLD, OnlinePanel.OLHIGHT /40);
+	private Font numFont = new Font("宋体", Font.BOLD, OnlinePanel.OLHIGHT / 40);
+	private Font statuFont = new Font("宋体", Font.BOLD, OnlinePanel.OLHIGHT /60);
+	public JLabel messageNum = new JLabel("");
+	
 	public SingleFriendLable() {
 		
 	}
@@ -36,9 +36,12 @@ public class SingleFriendLable extends JLabel {
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
 		friendName.setFont(nameFont);
 		status.setFont(statuFont);
+		messageNum.setFont(numFont);
 		status.setForeground(Color.BLUE);
-		this.add(friendName, BorderLayout.WEST);
-		this.add(status, BorderLayout.EAST);
+		messageNum.setForeground(Color.RED);
+		this.add(friendName);
+		this.add(status);
+		this.add(messageNum);
 	}
 
 	public JLabel getFriendName() {
@@ -59,6 +62,21 @@ public class SingleFriendLable extends JLabel {
 		} else {
 			this.status.setText("离线");
 		}
+	}
+	
+	public void addNum(){
+		this.num++;
+		if (num > 0 && num < 99)
+			messageNum.setText(num+"");
+		else{
+			if(num >= 99)
+				messageNum.setText(num+"");
+			else
+				messageNum.setText("");
+		}
+	}
+	public void clearNum(){
+		messageNum.setText("");
 	}
 
 }

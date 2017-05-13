@@ -27,6 +27,9 @@ import connect.ClientHandler;
 import entity.User;
 
 public class LoginPanel extends JPanel implements ActionListener, MouseListener {
+	public static final int LGWIDTH = 400;
+	public static final int LGHIGHT = 500;
+	
 	private JTextField idField = new JTextField();
 	private JPasswordField pwdField = new JPasswordField();
 	private MyButton loginButton = new MyButton("登陆", new Color(224, 102, 255),
@@ -39,7 +42,7 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 			102, 255));
 
 	public LoginPanel() {
-		this.setPreferredSize(new Dimension(400, 600));
+		this.setPreferredSize(new Dimension(LGWIDTH, LGHIGHT));
 		initialize();
 	}
 
@@ -55,19 +58,19 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 		formPanel.setLayout(null);
 		idField.setBorder(border);
 		pwdField.setBorder(border);
-		idField.setBounds(80, 20, 240, 40);
-		pwdField.setBounds(80, 80, 240, 40);
-		loginButton.setBounds(100, 180, 200, 40);
-		registelabel.setPreferredSize(new Dimension(100, 60));
+		idField.setBounds(LGWIDTH / 4, LGHIGHT * 3/50,  LGWIDTH / 2, LGHIGHT / 15);
+		pwdField.setBounds(LGWIDTH / 4,  LGHIGHT * 9/ 50,  LGWIDTH / 2, LGHIGHT / 15);
+		loginButton.setBounds(LGWIDTH / 4, LGHIGHT / 3, LGWIDTH / 2, LGHIGHT / 10);
+		
 		registelabel.setFont(new Font("宋体", Font.BOLD, 18));
 		registelabel.setForeground(Color.BLUE);
-		registelabel.setBounds(180, 230, 100, 60);
+		registelabel.setBounds(LGWIDTH * 2/ 5 + 10, LGHIGHT* 4/ 10,LGWIDTH / 4, LGHIGHT/5);
 
 		formPanel.add(idField);
 		formPanel.add(pwdField);
-		formPanel.add(registelabel);
 		formPanel.add(loginButton);
-		formPanel.setBounds(0, 100, 400, 300);
+		formPanel.add(registelabel);
+		formPanel.setBounds(0, 100, LGWIDTH, LGHIGHT * 2/ 3);
 		formPanel.setOpaque(false);
 		this.add(formPanel);
 
@@ -80,7 +83,7 @@ public class LoginPanel extends JPanel implements ActionListener, MouseListener 
 		if (e.getSource() == loginButton) {
 			String id = idField.getText();
 			String password = pwdField.getText();
-			Thread connect = new Thread(new ClientHandler(id, password));
+			ClientHandler connect = new ClientHandler(id, password);
 			connect.start();
 		}
 	}

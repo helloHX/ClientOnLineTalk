@@ -1,15 +1,10 @@
 package component;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -28,7 +23,6 @@ public class HistoryMessagePanel extends JTextPane {
 	private Color infoColor = new Color(187, 182, 182);
 	private Color fromColor = new Color(204, 65, 37);
 	private Color toColor = new Color(59, 143, 219);
-	private Font infoFont = new Font("宋体", Font.BOLD, 13);
 	private User toUser;
 
 	public HistoryMessagePanel() {
@@ -63,6 +57,7 @@ public class HistoryMessagePanel extends JTextPane {
 	}
 	
 	 public void insertIcon(File file) {
+		 System.out.println("图片");
 		  this.setCaretPosition(doc.getLength()); // 设置插入位置
 		  this.insertComponent(new ImagePanel(file.getPath()));
 		  try {
@@ -74,6 +69,7 @@ public class HistoryMessagePanel extends JTextPane {
 	}
 	 
 	 public void insertFilePanel(File file){
+		 System.out.println("插入文件");
 		 this.setCaretPosition(doc.getLength()); // 设置插入位置
 		  this.insertComponent(new FilePanel(file));
 		  try {

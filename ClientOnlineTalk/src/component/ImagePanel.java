@@ -4,15 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import view.ChartFrame;
 
 public class ImagePanel extends JPanel implements MouseListener{
 	private static final long serialVersionUID = -2517780360475790202L;
@@ -21,7 +20,7 @@ public class ImagePanel extends JPanel implements MouseListener{
 	private String imgPath;
 	public ImagePanel(String path){
 		this.imgPath = path;
-		this.setPreferredSize(new Dimension(300,300));
+		this.setPreferredSize(new Dimension(ChartFrame.CFWIDTH *3/8,ChartFrame.CFHIGHT *3/8));
 		ImageIcon img = new ImageIcon(path);
 		this.setBackground(Color.white);
 		this.image = img.getImage();
@@ -30,7 +29,7 @@ public class ImagePanel extends JPanel implements MouseListener{
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (image != null) {
-			g.drawImage(image, 0, 0, 300,300, this);
+			g.drawImage(image, 0, 0, ChartFrame.CFWIDTH *3/8,ChartFrame.CFHIGHT *3/8, this);
 		}
 	}
 	

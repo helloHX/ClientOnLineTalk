@@ -20,7 +20,9 @@ import connect.ClientHandler;
 import entity.User;
 
 public class OnlinePanel extends JPanel implements ActionListener {
-
+	public static final int OLWIDTH = 400;
+	public static final int OLHIGHT = 700;
+	
 	private static final long serialVersionUID = 2905458428510260853L;
 	private JLabel userNameLabel = new JLabel();
 	private JComboBox<String> statusBox = new JComboBox<String>();
@@ -31,7 +33,7 @@ public class OnlinePanel extends JPanel implements ActionListener {
 	
 
 	public OnlinePanel() {
-		this.setPreferredSize(new Dimension(400, 800));
+		this.setPreferredSize(new Dimension(OLWIDTH, OLHIGHT));
 		this.setLayout(null);
 		statusBox.addItem("在线");
 		statusBox.addItem("离线");
@@ -45,18 +47,20 @@ public class OnlinePanel extends JPanel implements ActionListener {
 		} else {
 			statusBox.setSelectedIndex(1);
 		}
-		friendSroll.setPreferredSize(new Dimension(400, 650));
-		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+		friendSroll.setPreferredSize(new Dimension(OLWIDTH, OLHIGHT * 4/5));
+		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, OLHIGHT / 40, OLWIDTH /20));
 		JPanel bottomPanel = new JPanel(
-				new FlowLayout(FlowLayout.RIGHT, 20, 15));
+				new FlowLayout(FlowLayout.RIGHT, OLHIGHT / 40, OLWIDTH / 27));
 		bottomPanel.add(addFriendButton);
 		bottomPanel.add(deleteFriendButton);
-		userNameLabel.setFont(new Font("宋体", Font.BOLD, 50));
+		userNameLabel.setFont(new Font("宋体", Font.BOLD, OLHIGHT / 16));
 		titlePanel.add(userNameLabel, BorderLayout.WEST);
 		titlePanel.add(statusBox, BorderLayout.EAST);
-		titlePanel.setBounds(0, 0, 400, 80);
-		friendSroll.setBounds(0, 80, 400, 650);
-		bottomPanel.setBounds(0, 720, 400, 80);
+		
+		titlePanel.setBounds(0, 0, OLWIDTH, OLHIGHT/10);
+		friendSroll.setBounds(0, OLHIGHT/10, OLWIDTH, OLHIGHT * 4/5);
+		bottomPanel.setBounds(0, OLHIGHT* 9/10, OLWIDTH, OLHIGHT/10);
+		
 		addFriendButton.addActionListener(this);
 		deleteFriendButton.addActionListener(this);
 		this.add(titlePanel);

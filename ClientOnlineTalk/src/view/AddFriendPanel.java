@@ -53,7 +53,7 @@ public class AddFriendPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == searchButton) {
 			id = idTextField.getText();
-			ClientHandler.queryFriend(id);
+			ClientHandler.queryUser(id);
 			// 好友查询请求
 		}
 		if (e.getSource() == sureButtpn) {
@@ -61,7 +61,7 @@ public class AddFriendPanel extends JPanel implements ActionListener {
 			if (id.equals("") || id == null) {
 				// 输入账号提示
 			} else {
-				ClientHandler.makeFriend(id);
+				ClientHandler.requestAddFriend(id);
 			}
 		}
 	}

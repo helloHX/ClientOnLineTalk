@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import view.ChartFrame;
+
 public class FilePanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 7228723348256556867L;
 	private File file;
@@ -27,7 +29,7 @@ public class FilePanel extends JPanel implements ActionListener {
 		openDirB.addActionListener(this);
 		openFileB.addActionListener(this);
 		this.setBackground(new Color(124,231,222));
-		this.setPreferredSize(new Dimension(40,40));
+		this.setPreferredSize(new Dimension(ChartFrame.CFWIDTH /20,ChartFrame.CFHIGHT /20));
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
 		this.add(fileNameL);
 		this.add(openFileB);

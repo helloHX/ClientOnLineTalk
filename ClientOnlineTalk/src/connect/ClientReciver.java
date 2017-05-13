@@ -21,13 +21,16 @@ import util.FileUtil;
 import view.ChartFrame;
 import view.OnlinePanel;
 import app.ClientOnlineTalk;
+import component.FriendPanel;
+import component.SingleFriendLable;
 import entity.Message;
 import entity.User;
 
 public class ClientReciver extends Thread {
 	public BufferedReader buffer_reader;
 	private final CountDownLatch endSignal;
-	public static final String filePath = "D:\\测试垃圾\\onlineChart";
+	public static final String filePath = "C:\\onlineChart";
+
 	public ClientReciver(BufferedReader buffer_reader, CountDownLatch endSignal) {
 		this.buffer_reader = buffer_reader;
 		this.endSignal = endSignal;
@@ -55,8 +58,8 @@ public class ClientReciver extends Thread {
 		try {
 			boolean online = true;
 			while (online) {
-				online = dispatch(getData(
-						new String(buffer_reader.readLine().getBytes("UTF-8"))));
+				online = dispatch(getData(new String(buffer_reader.readLine()
+						.getBytes("UTF-8"))));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,8 +77,27 @@ public class ClientReciver extends Thread {
 			return downloadfile(root);
 		case "image":
 			return downloadimage(root);
+		case "makeFriend":
+			return responseMKF(root);
 		case "changeFriendState":
 			return changeStateFriend(root);
+		}
+		return true;
+	}
+
+	private boolean responseMKF(Element root) {
+		String userID = root.getAttribute("userID");
+		String friendID = root.getAttribute("friendID");
+		int option = JOptionPane.showConfirmDialog(null, userID
+				+ "请求添加你为好友，是否添加", "验证消息", JOptionPane.YES_NO_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null);
+		switch (option) {
+		case JOptionPane.YES_NO_OPTION: 
+			ClientHandler.agreeMKF(userID + "," + friendID);
+		break;
+		case JOptionPane.NO_OPTION:
+			ClientHandler.disagreeMKF(userID + "," + friendID);
+		break;
 		}
 		return true;
 	}
@@ -95,8 +117,9 @@ public class ClientReciver extends Thread {
 		String fromId = root.getAttribute("fromId");
 		String toId = root.getAttribute("toId");
 		File file = new File(imageName);
-		String path = filePath + "\\"+ toId +"\\image\\"  + "\\" + fromId + "\\" + file.getName();
-		
+		String path = filePath + "\\" + toId + "\\image\\" + fromId
+				+ "\\" + file.getName();
+
 		Message message = new Message();
 		message.setMessage(path);
 		message.setMessageTime(imageSentIime);
@@ -104,25 +127,30 @@ public class ClientReciver extends Thread {
 		message.setFormId(fromId);
 		message.setToId(toId);
 		try {
-			//等待图片下载完成后添加到聊天记录界面上
+			// 等待图片下载完成后添加到聊天记录界面上
 			CountDownLatch downOverSingal = new CountDownLatch(1);
-			DownLoadHandler downLoadHandler =
-					new DownLoadHandler(Long.parseLong(imageLength), path,downOverSingal);
+			DownLoadHandler downLoadHandler = new DownLoadHandler(
+					Long.parseLong(imageLength), path, downOverSingal);
 			downLoadHandler.start();
 			ClientHandler.preparedIMGDownload(imageName);
+			FileUtil.saveInMessage(message);
 			downOverSingal.await();
-			
+
 			ChartFrame charFrame = (ChartFrame) ClientOnlineTalk.chartFrameMap
 					.get(message.getFormId());
 			if (charFrame != null) {// 如果聊天窗口已经打开则直接添加在聊天界面上
 				charFrame.historyMassagePanel.PreAddMessage(message);
 				charFrame.historyMassagePanel.insertIcon(new File(path));
 				charFrame.setVisible(true);
+			} else {
+				SingleFriendLable friendLable = FriendPanel
+						.getFriendLable(message.getFormId());
+				friendLable.addNum();
 			}
-			FileUtil.saveInMessage(message);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 		return true;
 	}
@@ -137,32 +165,37 @@ public class ClientReciver extends Thread {
 		File file = new File(fileName);
 		String path = filePath + "\\" + toId + "\\" + fromId + "\\"
 				+ file.getName();
+
 		Message message = new Message();
 		message.setMessage(path);
 		message.setMessageTime(fileSentTime);
 		message.setMessageType("FILE");
 		message.setFormId(fromId);
 		message.setToId(toId);
-		
+
 		try {
 			CountDownLatch downOverSingal = new CountDownLatch(1);
 			DownLoadHandler downLoadHandler = new DownLoadHandler(
-					Long.parseLong(fileLength), path,downOverSingal);
+					Long.parseLong(fileLength), path, downOverSingal);
 			downLoadHandler.start();
 			ClientHandler.preparedFileDownload(fileName);
-			downOverSingal.await();//等待文件下载完成
-			
+			downOverSingal.await();// 等待文件下载完成
+			FileUtil.saveInMessage(message);
 			ChartFrame charFrame = (ChartFrame) ClientOnlineTalk.chartFrameMap
 					.get(message.getFormId());
 			if (charFrame != null) {// 如果聊天窗口已经打开则直接添加在聊天界面上
 				charFrame.historyMassagePanel.PreAddMessage(message);
 				charFrame.historyMassagePanel.insertFilePanel(new File(path));
 				charFrame.setVisible(true);
+			} else {
+				SingleFriendLable friendLable = FriendPanel
+						.getFriendLable(message.getToId());
+				friendLable.addNum();
 			}
-			FileUtil.saveInMessage(message);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			//回复
+			// 回复
 		}
 
 		return true;
@@ -183,6 +216,13 @@ public class ClientReciver extends Thread {
 			System.out.println("charFrame_NO_null");
 			charFrame.historyMassagePanel.PreAddMessage(message);
 			charFrame.setVisible(true);
+		} else {
+			System.out.println("----to" + message.getFormId());
+			SingleFriendLable friendLable = FriendPanel.getFriendLable(message
+					.getFormId());
+			if (friendLable == null)
+				System.out.println("friendLable == null");
+			friendLable.addNum();
 		}
 		return true;
 	}
@@ -195,14 +235,18 @@ public class ClientReciver extends Thread {
 		case "login":
 			if (state.equals("ok")) {
 				dealLogin(message);
-			} else
-				JOptionPane.showMessageDialog(null,"密码或账号错误","登陆失败", JOptionPane.ERROR_MESSAGE);
-			return true;
+			} else{
+				JOptionPane.showMessageDialog(null, "密码或账号错误", "登陆失败",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			break;
 		case "friends":
 			if (state.equals("ok")) {
 				fullFriends(message);
-			} else;
-				return true;
+			} else
+				;
+			return true;
 		case "queryUser":
 			if (state.equals("ok")) {
 				respUserInfo(message);
@@ -212,7 +256,8 @@ public class ClientReciver extends Thread {
 		case "makeFriend":
 			if (state.equals("ok")) {
 				respmakeFriend(message);
-			} else;
+			} else
+				;
 			return true;
 		case "message":
 			if (state.equals("ok"))
@@ -243,7 +288,9 @@ public class ClientReciver extends Thread {
 	}
 
 	public void respmakeFriend(String message) {
-		ClientOnlineTalk.addFriendPanel.showFailResult("添加成功");
+		JOptionPane.showMessageDialog(null, "你已经和" + message + "是好友了", "验证信息",
+				JOptionPane.INFORMATION_MESSAGE);
+		ClientHandler.requestFriends();
 	}
 
 	public void respUserInfo(String message) {

@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 public class MyButton extends JButton{
+	private static final long serialVersionUID = -1992987181938268109L;
+
 	public MyButton() {
 		
 	}

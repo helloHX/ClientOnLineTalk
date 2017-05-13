@@ -25,8 +25,8 @@ public class ChartTitle extends JPanel implements ActionListener {
 	private String filepath;
 	private User friend;
 	private Color buttonColor = new Color(58, 173, 214);
-	private Font font = new Font("宋体", Font.BOLD, 18);
-	private Font infoFont = new Font("宋体", Font.BOLD, 60);
+	private Font font = new Font("宋体", Font.BOLD, ChartFrame.CFHIGHT * 2/80);
+	private Font infoFont = new Font("宋体", Font.BOLD, ChartFrame.CFHIGHT * 6/80);
 	private MyButton selectFile = new MyButton("选择文件", buttonColor, font);
 	private MyButton selectImage = new MyButton("选择图片", buttonColor, font);
 	private JLabel friendinfo = new JLabel();
@@ -37,7 +37,7 @@ public class ChartTitle extends JPanel implements ActionListener {
 
 	public ChartTitle(User friend) {
 		this.friend = friend;
-		this.setPreferredSize(new Dimension(800, 100));
+		this.setPreferredSize(new Dimension(ChartFrame.CFWIDTH, ChartFrame.CFHIGHT / 8));
 		friendinfo.setText(friend.getUserName());
 		friendinfo.setFont(infoFont);
 		friendinfo.setForeground(new Color(58, 173, 214));

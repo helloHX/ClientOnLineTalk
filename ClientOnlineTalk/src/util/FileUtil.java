@@ -28,7 +28,7 @@ public class FileUtil {
 	}
 	
 	private static synchronized void saveAllMessage(Message mes,String dir,String fileName){
-		String path = ClientReciver.filePath + dir
+		String path = ClientReciver.filePath + "\\" + dir
 				+ "\\chart" + "\\" + fileName + ".dat";
 		File file = new File(path);
 		try {
@@ -58,7 +58,7 @@ public class FileUtil {
 	}
 
 	public static synchronized List<Message> readMessage(String toId,String fromId) {
-		String path = ClientReciver.filePath +toId.trim()+ "\\chart"
+		String path = ClientReciver.filePath + "\\" +toId.trim()+ "\\chart"
 				+ "\\" + fromId.trim() + ".dat";
 		File file = new File(path);
 		System.out.println("File_readMessage mes:"+ path);
